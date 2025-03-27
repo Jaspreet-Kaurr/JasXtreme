@@ -1,0 +1,643 @@
+
+/* importing 'roboto' font from google fonts */ 
+/* don't need to wrap it in style tag .. coz it is itself written in style file */
+@import url('https://fonts.googleapis.com/css2?family=Flow+Circular&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100..900&display=swap');
+
+
+ /* Making a variable 'a' ...to be used for play icon ....whenever there is hovering on card ...then play icon opacity should become 1 .. */
+ /* by default setting it to 0 ...means no visible until no one hover  */
+:root{
+    --a : 0;     
+}
+
+
+/* For debugging overflow issue */
+/* 
+  html, body {
+    overflow-y: hidden; */
+    /* margin: 0;
+    padding: 0;
+    width: 100%; */
+/* }   */
+
+
+
+*{  
+   margin: 0;
+   padding: 0;
+   font-family: "Roboto", sans-serif;
+} 
+
+
+ body { 
+   /* will uncomment it in the last , as our logo is also of black color ..so not be visible ..so first focus on the main work ...doing all the other task before setting background-color .  */
+
+    background-color: black;
+    color : white; 
+ }  
+
+
+
+.left{
+    width : 25vw;
+    padding: 2px;
+
+}
+
+
+.right{
+    width : 75vw;
+    /* border-radius: 5px; */
+}
+
+
+ .logo{
+    padding-top: 5px;
+    padding-left: 3px;
+ } 
+
+
+/* .home{      //rather this , we r using separate class named p-1 (p = padding)
+    padding: 10px;
+} */
+
+.home ul{
+    padding: 1px 14px;
+}
+
+.home ul li{
+    display: flex;
+    gap: 15px;
+    width: 14px;
+    list-style: none;
+    padding-top: 10px;
+
+    font-weight: bold;
+}
+
+.heading{
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    padding-top: 14px;
+    padding : 14px 14px;
+    font-weight: bold;
+    align-items: center;
+    font-size: 13px;
+}
+
+.heading img{
+    width : 26px;
+}
+
+.library{
+    height: 75vh;
+    position:relative;
+}
+
+/* .footer{
+
+    display: flex;
+    justify-content:space-between;
+    font-size: 10px; */
+    /* color: grey; */
+    /* gap: 10px; */
+    /* explore ...position: absolute ...while it's container is relative  */
+    /* position: absolute;
+    bottom:7px;
+    padding: 0 8px; */
+    /* → Ensures items move to the next line if there’s not enough space. */
+    /* flex-wrap: wrap;
+    
+} */
+
+/* .footer a{
+    text-decoration: none;
+    color: grey; */
+
+    /* white-space: nowrap;  */
+    /* Prevents words inside each link from breaking  → Ensures each link stays in one line instead of breaking in the middle.  */
+/* } */
+
+
+
+/*                                                  right part working                                                                 */
+.right{
+    /* margin only from top-bottom ...not left -right */
+    margin: 5px 0;
+    position: relative;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center;  */
+    background-color: rgb(37, 37, 37);
+    height: 75px;
+}
+
+/* selecting all children of header */
+/*  ( > * ) --> all direct elements in header */
+.header > *{
+    padding: 12px;
+}
+
+.jasPlaylists{
+    padding: 16px;
+}
+
+.jasPlaylists h1{
+    padding: 16px;
+}
+
+
+.cardContainer{
+
+    margin: 10px;
+    padding-left: 5px;
+    display: flex;
+    /* justify-content: space-evenly; */
+    gap: 10px;
+    flex-wrap: wrap;
+    /* when cards are more , Make a scroll bar in right  */
+    overflow-y: auto;
+    max-height: 55vh;
+    padding-bottom: 70px;
+} 
+
+.card{
+    width: 200px;
+    padding: 15px 10px;
+    border-radius: 5px;
+    background-color:#1e1e1e;
+    margin: 15px 5px;
+    position: relative; 
+    transition: all 0.8s;
+}
+
+/* apply to all immediate elements of card */
+.card > *{
+    padding-top: 10px;
+}
+
+.card img{
+    width: 100%;
+    object-fit: contain;
+}
+
+.card:hover{
+    background-color: #252525;
+    cursor: pointer;
+    --a : 1;
+}
+
+
+/* play icon on cards  --> Removing it because causing irresponsive in mobile devices
+.play {
+    width: 38px; 
+    height: 38px; 
+    background-color: #1fdf64;  
+    display: flex;  */
+    /* border: 2px solid black ;  */
+    /* padding: 4px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: absolute;
+    right: 17px;
+    top: 169px;  */
+    /* it should be shown only during hover ..so  */
+     /* opacity:var(--a);
+    transition: all 1s ease-out;  */
+    /* To coming from bottom effect -> we can toggle a class ..in which opacity becomes 1 and its correct place to place it can be written */
+ /* }  */
+
+/* i have done this using chatGpt */
+/* but rather than this long code .. we can just write ... fill="#000" in play path */
+ /* .play svg path {
+    stroke: black; /* Change stroke color to black */
+    /* fill: black; Fill the icon with black  */ 
+
+
+    .buttons{
+        display: flex;
+        white-space:nowrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .buttons>* {
+        margin: 0 12px;
+    }
+    
+    .signupbtn {
+        background-color: #252525;
+        color: rgb(156, 148, 148);
+        font-weight: bold;
+        font-size: 16px;
+        /* removing by default button styles - found throught inspect */
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    
+    .signupbtn:hover {
+        /* font-size: 17px; */
+        color: white
+    }
+    
+    .loginbtn {
+        background-color: white;
+        border-radius: 30px;
+        /* font-weight: bold; */
+        color: black;
+        padding: 6px;
+        width: 89px;
+        height: 38px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    .loginbtn:hover {
+        font-weight: bold;
+        font-size: 17px;
+        
+    }
+    
+
+
+/* before this we have set .right part position as relative */
+    .playbar{
+        /* display: flex;
+        align-items: center;
+        justify-content: center; */
+        position: absolute;
+        bottom: 9px;
+        /* margin: 5px; */
+        /* right: 7px; */
+        background-color: #663987;
+        border-radius: 10px;
+        padding: 10px;
+        /* width: 90%;  */
+        width: 70vw;
+        min-height: 45px;
+        font-size:large;
+    }
+
+
+
+    
+.songbuttons{
+    padding: 0px 20px;
+    /* margin: auto; */
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 250px;
+}
+
+
+.songbuttons img{
+    cursor: pointer;
+}
+
+.songList{
+    height: 400px;  
+    overflow: auto;
+}
+
+.hamburger{
+    display: none;
+    cursor: pointer;
+}
+
+.hamburgerContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.songList ul{
+    padding: 0 12px;
+}
+
+.songList ul li{
+    list-style-type: decimal;
+    display: flex;
+    justify-content:space-between;
+    gap: 12px;
+    cursor: pointer;
+    /* padding: 12px 0 ; */
+    border: 1px solid white;
+    margin: 10px 0;
+    padding: 13px;
+    border-radius: 5px;
+    /* flex-wrap: wrap; */
+    
+}
+
+.songList .info{
+    font-size: 13px;
+    width: 344px;
+}
+
+.info div{
+    word-break: break-all;
+}
+
+
+.playnow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playnow span{
+    font-size: 15px;
+    width: 64px;
+}
+
+
+.seekbar{
+    /* left is added by my own observation */
+    left: 1%;
+    position: absolute;
+    height: 4px;
+    width: calc(100% - 20px); /* Adjust margin */
+
+    background-color:#350946;
+    border-radius: 10px;
+    bottom: 4px;
+    /* margin: 6px; */
+    cursor: pointer;
+}  
+
+/* position = relative ....ek element ko apni position se move krana ....not it's parent  */
+.circle{
+    position: relative;
+    bottom: 6px;
+    width: 13px;
+    left: 0%;
+    height: 13px;
+    border-radius:13px;
+    background-color: #350946;
+    /* for smoothly movement */
+    transition: left  0.2s;
+}
+
+.timevol{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 5px;
+}
+
+.songinfo , .songtime{
+    color: black;
+    /* padding: 0px 12px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.songinfo{
+    width: 200px;
+    padding: 0 12px;
+    /* margin-right: 10px; */
+ }
+
+.songtime{
+    width: 100px;
+    padding: 0 12px;
+    white-space: nowrap;
+    /* margin-left: 10px; */
+    /* display: contents; */
+}
+
+.volume{
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.range input{
+    cursor: pointer;
+}
+
+.abovebar{
+     display: flex;
+     justify-content: space-between;
+     margin: 3px 0; 
+}
+
+.close{
+    display: none;
+}
+
+
+
+
+.range input[type="range"] {
+    appearance: none;   /* Standard property */
+    -webkit-appearance: none; /* For WebKit-based browsers */
+    width: 100%; 
+    height: 10px; /* Track height */
+    background: linear-gradient(to right, #652370, #300642); /* Custom gradient color */
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+/* Custom Thumb (Slider Button) */
+.range input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 17px; /* Thumb size */
+    height: 17px;
+    background: rgb(58, 8, 65);
+    border: 2px solid #9e76ab; /* Thumb border */
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+
+
+
+
+/* responsive media query -> for Responsiveness on diff devices size  */
+/* tab size or phone size */
+ @media (max-width: 1200px){
+     .left{
+        position: fixed;
+        left: -130%;
+        transition: all .5s;
+        z-index: 1;
+        width: 370px;
+        background-color: black;
+        padding: 0px;
+    }
+
+    .left .close {
+        position: absolute;
+        right: 31px;
+        top: 25px;
+        width: 29px;
+    } 
+
+    .timevol{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: centre;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .right{
+        width: 100vw;   
+        margin: 0;
+    }
+
+    .playbar{
+        right: 16px;
+        min-height: 80px;
+        position: fixed;
+        width: calc(100vw - 50px);
+    }
+
+    .seekbar{
+        width: calc(100vw - 40px);
+    }
+
+
+    .hamburger{
+        display: block;
+    }
+
+
+    .card{  
+        width: 55vw;
+    }
+
+    .cardContainer{
+        height: 60vh;
+        /* margin: 30px; */
+        justify-content: center; 
+        /* max-height: unset; */
+        overflow-y: scroll;
+        /* margin-bottom: 35vh; */
+    }
+
+    .close{
+        display: block;
+    }
+
+
+    .abovebar {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .jasPlaylists{
+        padding: 0;
+    }
+
+     .jasPlaylists h1{
+        font-size: 28px;
+    } 
+
+    .library{
+        height: 80vh;
+    }
+ }
+
+
+
+ @media (max-width: 350px) {
+    .card {
+        width: 100%;
+    }
+
+    .header>* {
+        padding: 2px;
+    }
+
+    .buttons>* {
+        margin: 0 6px;
+    }
+
+    .header{
+        padding: 7px;
+        align-items: center;
+    }
+
+    .jasPlaylists h1 {
+        padding: 4px;
+    }
+
+    .library{
+        height: 85vh;
+    }
+
+    .left{ 
+        width: 100vw;
+    }
+
+    .buttons{
+        align-items: center;
+    }
+
+    .cardContainer{
+        max-height: unset;
+        overflow-y: unset;
+    }
+}
+
+
+
+
+#searchBar {
+    width: 250px; /* Adjust width */
+    height: 20px; /* Increase height */
+    padding: 2px;
+    font-size: 14px;
+    border: 2px solid #9d56c8; 
+    border-radius: 10px; /* Rounded corners */
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+#searchBar:focus {
+    border-color: #3f0a57; /* Darker blue on focus */
+    box-shadow: 0px 0px 8px rgba(52, 152, 219, 0.5);
+}
+
+#searchBtn {
+    height: 26px; /* Match input height */
+    padding: 0px 20px;
+    background-color: #5c3c7c; 
+    color: white;
+    border: none;
+    border-radius: 10px; /* Rounded corners */
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+#searchBtn:hover {
+    background-color: #331448; /* Darker blue on hover */
+    /* border: .5px solid white; */
+}
+
+
+
+
+
