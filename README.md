@@ -1,2 +1,2 @@
 # JasXtreme
-This is myFavSongs Project 
+This is myFavSongs playlist
