@@ -30,7 +30,7 @@ let currFolder;
 // Fetch songs dynamically from the `mysongs` folder
 async function getmySongs(folder) {
     currFolder = folder;
-    let a = await fetch(`http://127.0.0.1:5500/${folder}/`); // Fetch the song list HTML
+    let a = await fetch(`/${folder}/`); // Fetch the song list HTML
     let response = await a.text(); // Convert response to text
     
     let div = document.createElement("div");
@@ -109,8 +109,9 @@ const playMusic = (track, pause = false) => {
 
 
 
+
 async function displayAlbums(){
-    let a = await fetch(`http://127.0.0.1:5500/mysongs/`); // Fetch the song list HTML
+    let a = await fetch(`/mysongs/`); // Fetch the song list HTML
     let response = await a.text(); // Convert response to text
     
     let div = document.createElement("div");
@@ -124,10 +125,11 @@ async function displayAlbums(){
         for (let index = 0; index < array.length; index++) {      
             const e = array[index];
 
-        if(e.href.includes("/mysongs/")){
-            let folder = e.href.split("/").slice(-1)[0]   // give folder name
+// so we have htaccess file in mysongs folder(needed while hosting), so that our mysongs folder don't consider it as a song folder, therefore we have to add this line in 'if' condition ...that href should contain mysongs but not htaccess ..as htaccess is a file 
+        if(e.href.includes("/mysongs/") && !e.href.includes(".htaccess")){
+            let folder = e.href.split("/").slice(-2)[0]   // give folder name
             // Get the metadata of the folder
-          let a = await fetch(`http://127.0.0.1:5500/mysongs/${folder}/info.json`) // Fetch the song list HTML
+          let a = await fetch(`/mysongs/${folder}/info.json`) // Fetch the song list HTML
           let response = await a.json();  // Parse JSON if valid
           console.log(response)    // giving that json info of particular folders
 
@@ -139,6 +141,8 @@ async function displayAlbums(){
                     </div>`
         }
     }
+
+
 
 
     // If i click on any of the album/playlist ...then its playlist as well as it's first song should play
@@ -155,6 +159,8 @@ async function displayAlbums(){
 
 
     //   })
+
+
 
 
 // After adding Left Bar Functionality ( when screen-width <= 1200px)
