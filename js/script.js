@@ -47,6 +47,8 @@ async function getmySongs(folder) {
             mysongs.push(element.href.split(`/${folder}/`)[1]);
         }
     }
+
+
     // show all the songs in the playlist
     let songUL = document.querySelector(".songList ul");
     if (!songUL) return console.error("Error: .songList not found!");
@@ -79,6 +81,10 @@ async function getmySongs(folder) {
         });
     });
 }
+
+
+
+
 
 // Convert seconds to MM:SS format
 function secondsToMinutes(seconds) {
