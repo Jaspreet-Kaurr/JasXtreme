@@ -126,7 +126,7 @@ async function displayAlbums(){
             const e = array[index];
 
 // so we have htaccess file in mysongs folder(needed while hosting), so that our mysongs folder don't consider it as a song folder, therefore we have to add this line in 'if' condition ...that href should contain mysongs but not htaccess ..as htaccess is a file 
-        if(e.href.includes("/mysongs/") && !e.href.includes(".htaccess")){
+        if(e.href.includes("/mysongs/")){
             let folder = e.href.split("/").slice(-2)[0]   // give folder name
             // Get the metadata of the folder
           let a = await fetch(`/mysongs/${folder}/info.json`) // Fetch the song list HTML
