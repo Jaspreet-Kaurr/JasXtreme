@@ -30,6 +30,7 @@ let currFolder;
 // Fetch songs dynamically from the `mysongs` folder
 async function getmySongs(folder) {
     currFolder = folder;
+    console.log(currFolder)
     let a = await fetch(`/${folder}/`); // Fetch the song list HTML
     let response = await a.text(); // Convert response to text
     
@@ -87,11 +88,16 @@ function secondsToMinutes(seconds) {
     return `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
 }
 
+
+
+
 // Play selected song
 const playMusic = (track, pause = false) => {
+    console.log("track = " , track)
     if (!track) return console.error("Error: No track found!");
 
-    currentSong.src = `${currFolder}/${track}`; // Ensure correct path
+    currentSong.src = `${currFolder}/${track}`; // // Keep %20 as it is
+    // Ensure correct path 
 
     if (!pause) {
         currentSong.play().catch(err => console.error("Playback Error:", err));
@@ -110,37 +116,104 @@ const playMusic = (track, pause = false) => {
 
 
 
-async function displayAlbums(){
-    let a = await fetch(`/mysongs/`); // Fetch the song list HTML
-    let response = await a.text(); // Convert response to text
+// async function displayAlbums(){
+//     let a = await fetch(`/mysongs/`); // Fetch the song list HTML
+//     let response = await a.text(); // Convert response to text
     
+//     let div = document.createElement("div");
+//     div.innerHTML = response;
+
+//     let anchors = div.getElementsByTagName("a")
+//     let cardContainer = document.querySelector(".cardContainer")
+//     // Array.from(anchors).forEach(async e=>{   --> async func's work  in background .. so our event listener for getting playlist of that clicked card is not working .... so using traditional forLoop
+//     let array = Array.from(anchors)
+//     // now working synchronously
+//         for (let index = 0; index < array.length; index++) {      
+//             const e = array[index];
+
+// // so we have htaccess file in mysongs folder(needed while hosting), so that our mysongs folder don't consider it as a song folder, therefore we have to add this line in 'if' condition ...that href should contain mysongs but not htaccess ..as htaccess is a file 
+//         if(e.href.includes("/mysongs/")){
+//             let folder = e.href.split("/").slice(-1)[0]   // give folder name
+//             // Get the metadata of the folder
+//           let a = await fetch(`/mysongs/${folder}/info.json`) // Fetch the song list HTML
+//           let response = await a.json();  // Parse JSON if valid
+//           console.log(response)    // giving that json info of particular folders
+
+//           // populating card container
+//           cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}"  class="card">
+//                         <img  src="/mysongs/${folder}/cover.jpg" alt="">
+//                         <h3>${response.title}</h3>
+//                         <p>${response.description}</p>
+//                     </div>`
+//         }
+//     }
+
+
+
+//  My above 'displayAlbum' causing error while deploying code ....cause not able to get right folder name.so not able to fetch json file in mysongs folder ...
+// So using chapGPT code ..so running fine now
+
+async function displayAlbums() {
+    let a = await fetch(`/mysongs/`); // Fetch the song list HTML
+    let response = await a.text();
+
     let div = document.createElement("div");
     div.innerHTML = response;
 
-    let anchors = div.getElementsByTagName("a")
-    let cardContainer = document.querySelector(".cardContainer")
-    // Array.from(anchors).forEach(async e=>{   --> async func's work  in background .. so our event listener for getting playlist of that clicked card is not working .... so using traditional forLoop
-    let array = Array.from(anchors)
-    // now working synchronously
-        for (let index = 0; index < array.length; index++) {      
-            const e = array[index];
+    let anchors = div.getElementsByTagName("a");
+    let cardContainer = document.querySelector(".cardContainer");
 
-// so we have htaccess file in mysongs folder(needed while hosting), so that our mysongs folder don't consider it as a song folder, therefore we have to add this line in 'if' condition ...that href should contain mysongs but not htaccess ..as htaccess is a file 
-        if(e.href.includes("/mysongs/")){
-            let folder = e.href.split("/").slice(-2)[0]   // give folder name
-            // Get the metadata of the folder
-          let a = await fetch(`/mysongs/${folder}/info.json`) // Fetch the song list HTML
-          let response = await a.json();  // Parse JSON if valid
-          console.log(response)    // giving that json info of particular folders
+    let array = Array.from(anchors);
+    
+    for (let index = 0; index < array.length; index++) {
+        const e = array[index];
 
-          // populating card container
-          cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}"  class="card">
-                        <img  src="/mysongs/${folder}/cover.jpg" alt="">
+        if (e.href.toLowerCase().includes("/mysongs/") && !e.href.toLowerCase().includes(".htaccess")) {
+            let urlParts = e.href.split("/").filter(part => part !== ""); // Remove empty parts
+            let folder = urlParts[urlParts.length - 1]; // Get last valid folder name
+
+            if (!folder) {
+                console.warn(`Skipping invalid folder: ${e.href}`);
+                continue;
+            }
+
+            let jsonFile = `/mysongs/${folder}/info.json`; // Default file name
+            
+            try {
+                let infoResponse = await fetch(jsonFile);
+                
+                if (!infoResponse.ok) {
+                    jsonFile = `/mysongs/${folder}/Info.json`; // Try capitalized version
+                    infoResponse = await fetch(jsonFile);
+                }
+
+                if (!infoResponse.ok) {
+                    console.warn(`Warning: info.json not found for ${folder}`);
+                    continue; // Skip this folder if info.json is missing
+                }
+
+                let response = await infoResponse.json();
+                console.log(response); // Log JSON data
+
+                // Populate card container
+                cardContainer.innerHTML += `
+                    <div data-folder="${folder}" class="card">
+                        <img src="/mysongs/${folder}/cover.jpg" alt="">
                         <h3>${response.title}</h3>
                         <p>${response.description}</p>
-                    </div>`
+                    </div>`;
+            } catch (error) {
+                console.error(`Error fetching info.json for ${folder}:`, error);
+            }
         }
     }
+
+
+
+
+
+
+
 
 
 
